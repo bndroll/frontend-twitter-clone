@@ -86,7 +86,7 @@ export const useStylesSignIn = makeStyles((theme) => ({
     }
 }))
 
-export const SignIn = () => {
+const SignIn: React.FC = (): React.ReactElement => {
     const classes = useStylesSignIn()
     const [visibleModal, setVisibleModal] = useState<'signIn' | 'signUp'>()
 
@@ -148,7 +148,7 @@ export const SignIn = () => {
                         classes={classes}
                         title="Войти в аккаунт">
                         <FormControl className={classes.loginFormControl} component="fieldset" fullWidth>
-                            <FormGroup aria-label="position" row>
+                            <FormGroup row>
                                 <TextField
                                     className={classes.loginSideField}
                                     autoFocus
@@ -186,7 +186,7 @@ export const SignIn = () => {
                         classes={classes}
                         title="Создайте учетную запись">
                         <FormControl className={classes.loginFormControl} component="fieldset" fullWidth>
-                            <FormGroup aria-label="position" row>
+                            <FormGroup row>
                                 <TextField
                                     className={classes.registerField}
                                     autoFocus
@@ -235,3 +235,5 @@ export const SignIn = () => {
         </div>
     )
 }
+
+export default SignIn

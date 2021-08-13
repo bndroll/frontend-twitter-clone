@@ -1,11 +1,21 @@
 import React from 'react'
-import {SignIn} from "./pages/SignIn/SignIn"
+import {Route, Switch} from "react-router-dom"
+import {withSuspense} from "./hoc/withSuspense"
 
+
+const SignInPage = React.lazy(() => import('./pages/SignIn/SignIn')),
+      HomePage = React.lazy(() => import('./pages/Home/Home'))
+
+const SuspendedSignInPage = withSuspense(SignInPage),
+      SuspendedHomePage = withSuspense(HomePage)
 
 const App = () => {
     return (
         <div className='App'>
-            <SignIn />
+            <Switch>
+                <Route path='/login' component={SuspendedSignInPage} />
+                <Route path='/' component={SuspendedHomePage} exact />
+            </Switch>
         </div>
     )
 }
