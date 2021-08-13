@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import  React, {useState} from 'react'
 import { makeStyles, Typography, Button } from '@material-ui/core'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import SearchIcon from '@material-ui/icons/Search'
@@ -27,10 +27,10 @@ export const useStylesSignIn = makeStyles((theme) => ({
     blueSideBigIcon: {
         position: 'absolute',
         left: '50%',
-        top: '53%',
+        top: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '350%',
-        height: '350%',
+        width: '210%',
+        height: '210%',
     },
     blueSideListInfo: {
         position: 'relative',
@@ -75,11 +75,15 @@ export const useStylesSignIn = makeStyles((theme) => ({
         marginBottom: 18,
     },
     registerField: {
-        marginBottom: theme.spacing(5),
+        marginBottom: theme.spacing(3),
     },
     loginFormControl: {
-        marginBottom: theme.spacing(2),
+        marginBottom: theme.spacing(3),
     },
+    loginModalButton: {
+        marginLeft: '65%',
+        width: '35%'
+    }
 }))
 
 export const SignIn = () => {
@@ -169,7 +173,7 @@ export const SignIn = () => {
                                     type="password"
                                     fullWidth
                                 />
-                                <Button onClick={closeModalHandler} variant="contained" color="primary" fullWidth>
+                                <Button className={classes.loginModalButton} onClick={closeModalHandler} variant="contained" color="primary">
                                     Войти
                                 </Button>
                             </FormGroup>
@@ -219,7 +223,7 @@ export const SignIn = () => {
                                     type="password"
                                     fullWidth
                                 />
-                                <Button variant="contained" color="primary" fullWidth>
+                                <Button className={classes.loginModalButton} variant="contained" color="primary">
                                     Далее
                                 </Button>
                             </FormGroup>
