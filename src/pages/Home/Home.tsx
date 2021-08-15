@@ -1,167 +1,153 @@
-import React from "react"
-import {Container, createStyles, Grid, InputBase, makeStyles, Paper, Typography, withStyles} from "@material-ui/core"
-import {SideMenu} from "../../components/SideMenu"
+import React, {useEffect} from "react"
+import {useDispatch, useSelector} from "react-redux"
+
+import Divider from "@material-ui/core/Divider"
+import InputAdornment from "@material-ui/core/InputAdornment"
+import List from "@material-ui/core/List"
+import ListItem from "@material-ui/core/ListItem"
+import ListItemAvatar from "@material-ui/core/ListItemAvatar"
+import ListItemText from "@material-ui/core/ListItemText"
+import Container from "@material-ui/core/Container"
+import Grid from "@material-ui/core/Grid"
+import Paper from "@material-ui/core/Paper"
+import Typography from "@material-ui/core/Typography"
+import Avatar from "@material-ui/core/Avatar"
+import Button from "@material-ui/core/Button"
+
 import FilterVintageIcon from '@material-ui/icons/FilterVintageOutlined'
-import {Tweet} from "../../components/Tweet";
-import {grey} from "@material-ui/core/colors";
+import SearchIcon from "@material-ui/icons/Search"
+import PersonAddIcon from '@material-ui/icons/PersonAddOutlined'
 
+import {Tweet} from "../../components/Tweet"
+import {SideMenu} from "../../components/SideMenu"
+import {AddTweetForm} from "../../components/AddTweetForm"
+import {SearchTextField} from "../../components/SearchTextField"
+import {useStylesHome} from "./homeTheme"
+import {fetchTweets} from "../../store/ducks/tweets/actionCreators"
+import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets/selectors"
+import {CircularProgress} from "@material-ui/core";
 
-export const useStylesHome = makeStyles((theme) => ({
-    wrapper: {
-        height: '100vh',
-    },
-    logo: {
-        margin: '10px 0',
-    },
-    logoIcon: {
-        fontSize: 32,
-    },
-    sideMenuList: {
-        listStyle: 'none',
-        padding: 0,
-        margin: 0,
-        width: '100%',
-    },
-    sideMenuListItem: {
-        cursor: "pointer",
-        '&:hover': {
-            '& div': {
-                backgroundColor: 'rgba(29, 161, 242, 0.1)',
-                '& h6': {
-                    color: theme.palette.primary.main,
-                },
-                '& svg path': {
-                    fill: theme.palette.primary.main,
-                }
-            }
-        },
-        '& div': {
-            display: 'flex',
-            alignItems: 'center',
-            position: 'relative',
-            padding: '0 25px 0 15px',
-            borderRadius: 30,
-            height: 40,
-            marginBottom: 8,
-            transition: 'background-color 0.2s ease-in-out',
-            '& h6': {
-                transition: 'color 0.2s ease-in-out',
-            },
-            '& svg path': {
-                transition: 'color 0.2s ease-in-out',
-            }
-        }
-    },
-    sideMenuListItemLabel: {
-        marginLeft: 10,
-        fontWeight: 500,
-        fontSize: 16,
-    },
-    sideMenuListItemIcon: {
-        marginLeft: -4,
-        fontSize: 24,
-    },
-    sideMenuTweetButton: {
-        padding: theme.spacing(2),
-        marginTop: theme.spacing(2),
-    },
-    tweetsWrapper: {
-        height: '100%',
-        borderTop: 0,
-        borderBottom: 0,
-    },
-    tweetsHeader: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderTop: 0,
-        borderLeft: 0,
-        borderRight: 0,
-        padding: '10px 15px',
-        '& h6': {
-            fontWeight: 700,
-        },
-    },
-    tweet: {
-        cursor: 'pointer',
-        padding: '15px 20px 8px',
-        transition: 'background-color 0.2s ease-in-out',
-        '&:hover': {
-            backgroundColor: 'rgb(245, 248, 250)',
-        },
-    },
-    tweetAvatar: {
-        width: theme.spacing(5),
-        height: theme.spacing(5),
-    },
-    tweetUserName: {
-        color: grey[500],
-    },
-    tweetFooter: {
-        display: 'flex',
-        position: 'relative',
-        justifyContent: 'space-between',
-        left: -13,
-        width: '95%',
-    },
-    tweetFooterIconButton: {
-        marginRight: 3,
-        '& span': {
-            '& svg': {
-                fontSize: 18
-            }
-        },
-        '&:hover': {
-            '& span': {
-                '& svg': {
-                    color: theme.palette.primary.main
-                }
-            }
-        }
-    },
-}))
-
-const SearchTextField = withStyles(() =>
-    createStyles({
-        input: {
-            borderRadius: 30,
-            backgroundColor: '#E6ECF0',
-            height: 50,
-            padding: '0 20px',
-        }
-    })
-)(InputBase)
 
 const Home: React.FC = (): React.ReactElement => {
+    const dispatch = useDispatch()
     const classes = useStylesHome()
+    const tweets = useSelector(selectTweetsItems)
+    const isLoading = useSelector(selectIsTweetsLoading)
+
+    useEffect(() => {
+        dispatch(fetchTweets())
+    }, [dispatch])
 
     return (
         <Container className={classes.wrapper} maxWidth='lg'>
             <Grid container spacing={3}>
-                <Grid item xs={2}>
-                    <SideMenu classes={classes} />
+                <Grid sm={1} md={3} item>
+                    <SideMenu classes={classes}/>
                 </Grid>
-                <Grid item xs={7}>
+                <Grid sm={8} md={6} item>
                     <Paper className={classes.tweetsWrapper} variant="outlined" square>
                         <Paper className={classes.tweetsHeader} variant="outlined" square>
                             <Typography variant='h6'>Главная</Typography>
-                            <FilterVintageIcon color='primary' />
+                            <FilterVintageIcon color='primary'/>
                         </Paper>
-
-                        {[...new Array(20).fill(
-                            <Tweet text='Петиция чтобы в каждой пачке сухариков всегда лежал один большой в три слоя обсыпанный химическими специями царь-сухарик.'
-                                   classes={classes}
-                                   user={{
-                                       fullName: 'Ilan Mask',
-                                       userName: 'ilya_moksov',
-                                       avatarUrl: 'https://images.unsplash.com/photo-1528914457842-1af67b57139d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80'
-                                   }}
-                            />
-                        )]}
+                        <Paper>
+                            <div className={classes.addForm}>
+                                <AddTweetForm classes={classes}/>
+                            </div>
+                            <div className={classes.addFormBottomLine}/>
+                        </Paper>
+                        {isLoading ? (
+                            <div className={classes.tweetsCentred}>
+                                <CircularProgress />
+                            </div>
+                        ) : (
+                            tweets.map(tweet => (
+                                <Tweet key={tweet._id} text={tweet.text} user={tweet.user} classes={classes} />
+                            ))
+                        )}
                     </Paper>
                 </Grid>
-                <Grid item xs={3}>
-                    <SearchTextField placeholder='Поиск по твиттеру' fullWidth />
+                <Grid sm={3} md={3} item>
+                    <div className={classes.rightSide}>
+                        <SearchTextField variant='outlined'
+                                         placeholder='Поиск по твиттеру'
+                                         InputProps={{
+                                             startAdornment: (
+                                                 <InputAdornment position='start'>
+                                                     <SearchIcon/>
+                                                 </InputAdornment>
+                                             ),
+                                         }}
+                                         fullWidth
+                        />
+                        <Paper className={classes.rightSideBlock}>
+                            <Paper className={classes.rightSideBlockHeader} variant='outlined'>
+                                <b>Актуальные темы</b>
+                            </Paper>
+                            <List>
+                                <ListItem className={classes.rightSideBlockItem}>
+                                    <ListItemText
+                                        primary="Санкт-Петербург"
+                                        secondary={
+                                            <Typography component="span" variant="body2" color="textSecondary">
+                                                Твитов: 3 331
+                                            </Typography>
+                                        }
+                                    />
+                                </ListItem>
+                                <Divider component="li"/>
+                                <ListItem className={classes.rightSideBlockItem}>
+                                    <ListItemText
+                                        primary="#коронавирус"
+                                        secondary={
+                                            <Typography component="span" variant="body2" color="textSecondary">
+                                                Твитов: 163 122
+                                            </Typography>
+                                        }
+                                    />
+                                </ListItem>
+                                <Divider component='li'/>
+                                <ListItem className={classes.rightSideBlockItem}>
+                                    <ListItemText
+                                        primary="Беларусь"
+                                        secondary={
+                                            <Typography component="span" variant="body2" color="textSecondary">
+                                                Твитов: 13 554
+                                            </Typography>
+                                        }
+                                    />
+                                </ListItem>
+                                <Divider component="li"/>
+                            </List>
+                        </Paper>
+                        <Paper className={classes.rightSideBlock}>
+                            <Paper className={classes.rightSideBlockHeader} variant="outlined">
+                                <b>Кого читать</b>
+                            </Paper>
+                            <List>
+                                <ListItem className={classes.rightSideBlockItem}>
+                                    <ListItemAvatar>
+                                        <Avatar
+                                            alt="Remy Sharp"
+                                            src="https://avatars.mds.yandex.net/get-zen_doc/1368767/pub_5c13397a5f531700aae875b2_5c133d00264c6c00acf66ea8/scale_1200"
+                                        />
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        primary="Dock Shame"
+                                        secondary={
+                                            <Typography component="span" variant="body2" color="textSecondary">
+                                                @vDockShame
+                                            </Typography>
+                                        }
+                                    />
+                                    <Button color="primary">
+                                        <PersonAddIcon/>
+                                    </Button>
+                                </ListItem>
+                                <Divider component='li'/>
+                            </List>
+                        </Paper>
+                    </div>
                 </Grid>
             </Grid>
         </Container>
