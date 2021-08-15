@@ -14,7 +14,7 @@ const App = () => {
         <div className='App'>
             <Switch>
                 <Route path='/login' component={SuspendedSignInPage} />
-                <Route path='/' component={SuspendedHomePage} exact />
+                <Route path='/home' component={SuspendedHomePage} />
             </Switch>
         </div>
     )

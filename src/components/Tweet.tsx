@@ -1,4 +1,5 @@
 import React from "react"
+import {Link} from 'react-router-dom'
 
 import Avatar from "@material-ui/core/Avatar"
 import Paper from "@material-ui/core/Paper"
@@ -14,6 +15,7 @@ import {useStylesHome} from "../pages/Home/homeTheme"
 
 
 interface TweetProps {
+    _id: string
     text: string
     classes: ReturnType<typeof useStylesHome>
     user: {
@@ -23,50 +25,52 @@ interface TweetProps {
     }
 }
 
-export const Tweet: React.FC<TweetProps> = ({text, classes, user}: TweetProps): React.ReactElement => {
+export const Tweet: React.FC<TweetProps> = ({_id, text, classes, user}: TweetProps): React.ReactElement => {
     return (
-        <Paper className={classes.tweet} variant="outlined">
-            <Avatar className={classes.tweetAvatar}
-                    alt={`Аватар пользователя ${user.userName}`}
-                    src={user.avatarUrl}
-            />
-            <div>
-                <Typography>
-                    <b>{user.fullName}</b>&nbsp;
-                    <span className={classes.tweetUserName}>@{user.userName}</span>&nbsp;
-                    <span className={classes.tweetUserName}>·</span>&nbsp;
-                    <span className={classes.tweetUserName}>1 ч</span>
-                </Typography>
-                <Typography variant='body1' gutterBottom>
-                    {text}
-                </Typography>
-                <div className={classes.tweetFooter}>
-                    <div>
-                        <IconButton className={classes.tweetFooterIconButton}>
-                            <CommentIcon/>
-                        </IconButton>
-                        <span>1</span>
-                    </div>
-                    <div>
-                        <IconButton className={classes.tweetFooterIconButton}>
-                            <RepostIcon/>
-                        </IconButton>
-                        <span>2</span>
-                    </div>
-                    <div>
-                        <IconButton className={classes.tweetFooterIconButton}>
-                            <LikeIcon/>
-                        </IconButton>
-                        <span>3</span>
-                    </div>
-                    <div>
-                        <IconButton className={classes.tweetFooterIconButton}>
-                            <ShareIcon/>
-                        </IconButton>
-                        <span>4</span>
+        <Link className={classes.tweetWrapper} to={`/home/tweet/${_id}`}>
+            <Paper className={classes.tweet} variant="outlined">
+                <Avatar className={classes.tweetAvatar}
+                        alt={`Аватар пользователя ${user.userName}`}
+                        src={user.avatarUrl}
+                />
+                <div>
+                    <Typography>
+                        <b>{user.fullName}</b>&nbsp;
+                        <span className={classes.tweetUserName}>@{user.userName}</span>&nbsp;
+                        <span className={classes.tweetUserName}>·</span>&nbsp;
+                        <span className={classes.tweetUserName}>1 ч</span>
+                    </Typography>
+                    <Typography variant='body1' gutterBottom>
+                        {text}
+                    </Typography>
+                    <div className={classes.tweetFooter}>
+                        <div>
+                            <IconButton className={classes.tweetFooterIconButton}>
+                                <CommentIcon/>
+                            </IconButton>
+                            <span>1</span>
+                        </div>
+                        <div>
+                            <IconButton className={classes.tweetFooterIconButton}>
+                                <RepostIcon/>
+                            </IconButton>
+                            <span>2</span>
+                        </div>
+                        <div>
+                            <IconButton className={classes.tweetFooterIconButton}>
+                                <LikeIcon/>
+                            </IconButton>
+                            <span>3</span>
+                        </div>
+                        <div>
+                            <IconButton className={classes.tweetFooterIconButton}>
+                                <ShareIcon/>
+                            </IconButton>
+                            <span>4</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </Paper>
+            </Paper>
+        </Link>
     )
 }

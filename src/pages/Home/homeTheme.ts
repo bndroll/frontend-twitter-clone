@@ -68,14 +68,17 @@ export const useStylesHome = makeStyles((theme) => ({
         borderTop: 0,
         borderBottom: 0,
     },
+    tweetWrapper: {
+        color: 'inherit',
+        textDecoration: 'none',
+    },
     tweetsHeader: {
         display: 'flex',
-        justifyContent: 'space-between',
         alignItems: 'center',
         borderTop: 0,
         borderLeft: 0,
         borderRight: 0,
-        padding: '10px 15px',
+        padding: '14px 30px',
         '& h6': {
             fontWeight: 700,
         },
@@ -206,6 +209,10 @@ export const useStylesHome = makeStyles((theme) => ({
         '&:hover': {
             backgroundColor: '#edf3f6',
         },
+        '& a': {
+            color: 'inherit',
+            textDecoration: 'none',
+        }
     },
     modalAddTweetForm: {
         width: 550,

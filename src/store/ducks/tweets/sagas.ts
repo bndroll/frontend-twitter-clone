@@ -1,8 +1,9 @@
-import {call, put, takeEvery} from 'redux-saga/effects'
+import {call, put, takeLatest} from 'redux-saga/effects'
 
-import {setTweets, setTweetsLoadingState, TweetsActionsType} from "./actionCreators"
+import {setTweets, setTweetsLoadingState} from "./actionCreators"
+import {TweetsActionsType} from "./contracts/actionTypes"
 import {TweetsAPI} from "../../../services/api/tweetsAPI"
-import {LoadingState} from "./contracts/state"
+import {LoadingState} from "../../types"
 
 
 export function* fetchTweetsRequest(): any {
@@ -15,5 +16,5 @@ export function* fetchTweetsRequest(): any {
 }
 
 export function* tweetsSaga() {
-    yield takeEvery(TweetsActionsType.FETCH_TWEETS, fetchTweetsRequest)
+    yield takeLatest(TweetsActionsType.FETCH_TWEETS, fetchTweetsRequest)
 }

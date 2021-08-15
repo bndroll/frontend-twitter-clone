@@ -1,4 +1,6 @@
 import React, {useState} from "react"
+import classNames from "classnames"
+import {Link} from 'react-router-dom'
 
 import Hidden from "@material-ui/core/Hidden"
 import Button from "@material-ui/core/Button"
@@ -17,7 +19,6 @@ import CreateIcon from '@material-ui/icons/Create'
 import {useStylesHome} from "../pages/Home/homeTheme"
 import {ModalBlock} from "./ModalBlock"
 import {AddTweetForm} from "./AddTweetForm"
-import classNames from "classnames";
 
 
 interface SideMenuProps {
@@ -37,11 +38,13 @@ export const SideMenu: React.FC<SideMenuProps> = ({classes}: SideMenuProps): Rea
 
     return (
         <ul className={classes.sideMenuList}>
-            <li className={classes.sideMenuListItem}>
-                <IconButton className={classes.logo} color='primary'>
-                    <TwitterIcon className={classes.logoIcon}/>
-                </IconButton>
-            </li>
+            <Link to={`/home`}>
+                <li className={classes.sideMenuListItem}>
+                    <IconButton className={classes.logo} color='primary'>
+                        <TwitterIcon className={classes.logoIcon}/>
+                    </IconButton>
+                </li>
+            </Link>
 
             <li className={classes.sideMenuListItem}>
                 <div>

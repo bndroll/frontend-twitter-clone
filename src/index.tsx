@@ -12,14 +12,12 @@ import {store} from "./store/store"
 
 
 ReactDOM.render(
-    <React.StrictMode>
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <BrowserRouter>
-                <Provider store={store} >
-                    <App/>
-                </Provider>
-            </BrowserRouter>
-        </ThemeProvider>
-    </React.StrictMode>, document.getElementById('root')
+    <ThemeProvider theme={theme}>
+        <CssBaseline/>
+        <BrowserRouter>
+            <Provider store={store}>
+                <App/>
+            </Provider>
+        </BrowserRouter>
+    </ThemeProvider>, document.getElementById('root')
 )

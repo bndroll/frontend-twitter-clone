@@ -1,11 +1,13 @@
-import {LoadingState, TweetsState} from "./contracts/state"
-import {RootState} from "../../store";
-import {createSelector} from "reselect";
+import {createSelector} from "reselect"
+
+import {TweetsState} from "./contracts/state"
+import {RootState} from "../../store"
+import {LoadingState} from "../../types"
 
 
 export const selectTweets = (state: RootState): TweetsState => state.tweets
 
-export const selectLoadingState = (state: RootState): LoadingState => state.tweets.loadingState
+export const selectLoadingState = (state: RootState): LoadingState => selectTweets(state).loadingState
 
 export const selectIsTweetsLoading = (state: RootState): boolean => selectLoadingState(state) === LoadingState.LOADING
 
