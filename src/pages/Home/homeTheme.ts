@@ -75,12 +75,13 @@ export const useStylesHome = makeStyles((theme) => ({
     tweetsHeader: {
         display: 'flex',
         alignItems: 'center',
+        flex: 1,
         borderTop: 0,
         borderLeft: 0,
         borderRight: 0,
         padding: '14px 30px',
         '& h6': {
-            fontWeight: 700,
+            fontWeight: 800,
         },
     },
     tweetsCentred: {
@@ -89,7 +90,6 @@ export const useStylesHome = makeStyles((theme) => ({
     },
     tweet: {
         display: 'flex',
-        justifyContent: 'space-between',
         borderTop: 0,
         borderLeft: 0,
         borderRight: 0,
@@ -113,7 +113,7 @@ export const useStylesHome = makeStyles((theme) => ({
         position: 'relative',
         justifyContent: 'space-between',
         left: -13,
-        maxWidth: 450,
+        width: 450,
     },
     tweetFooterIconButton: {
         marginRight: 3,
@@ -143,6 +143,7 @@ export const useStylesHome = makeStyles((theme) => ({
         alignItems: 'center',
     },
     addFormBottomActions: {
+        display: 'flex',
         marginTop: 10,
         paddingLeft: 70,
     },
@@ -221,4 +222,22 @@ export const useStylesHome = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
+    fullTweet: {
+        padding: 22,
+    },
+    tweetsHeaderUser: {
+        display: 'flex',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    fullTweetFooterBlock: {
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    fullTweetText: {
+        fontSize: 24,
+        marginTop: 20,
+        lineHeight: 1.3125,
+        wordBreak: 'break-word',
+    }
 }))

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Route, Switch} from "react-router-dom"
+import {Redirect, Route, Switch} from "react-router-dom"
 import {withSuspense} from "./hoc/withSuspense"
 
 
@@ -15,6 +15,7 @@ const App = () => {
             <Switch>
                 <Route path='/login' component={SuspendedSignInPage} />
                 <Route path='/home' component={SuspendedHomePage} />
+                <Redirect from="/" to="/home" />
             </Switch>
         </div>
     )
