@@ -1,6 +1,6 @@
 ## frontend twetter-clone
 
-forntend twitter-clone
+forntend half twitter-clone
 
 ### Technologes Stack
 
