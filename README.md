@@ -1,3 +1,14 @@
+## frontend twetter-clone
+
+forntend twitter-clone
+
+### Technologes Stack
+
+-   HTML5
+-   CSS3, Material UI
+-   JavaScript, TypeScript, React (react-router-dom, yup, react-hook-form, hookform-resolvers, classnames, axios, date-fns, medium-zoom)
+-   Redux (react-redux, redux-saga, reselect, immer)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
