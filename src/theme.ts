@@ -33,7 +33,11 @@ export const theme = createTheme({
         },
         text: {
             primary: '#14171a'
-        }
+        },
+        action: {
+            disabledBackground: 'rgb(153 216 255)',
+            disabled: '#fff',
+        },
     },
     shadows: [],
     overrides: {

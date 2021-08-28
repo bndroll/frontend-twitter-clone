@@ -1,35 +1,40 @@
 import React, {useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 
-import IconButton from "@material-ui/core/IconButton"
 import Avatar from "@material-ui/core/Avatar"
 import TextareaAutosize from "@material-ui/core/TextareaAutosize"
 import Button from "@material-ui/core/Button"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import Alert from '@material-ui/lab/Alert'
 
-import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined'
-import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfiedOutlined'
-
-import {useStylesHome} from "../pages/Home/homeTheme"
+import {useStylesHome} from "../pages/themes/homeTheme"
 import {selectAddFormState} from "../store/ducks/tweets/selectors"
-import {fetchAddTweet} from "../store/ducks/tweets/actionCreators"
+import {fetchAddTweet, setAddFormState} from "../store/ducks/tweets/actionCreators"
 import {AddFormState} from "../store/ducks/tweets/contracts/state"
+import {uploadImage} from "../utils/uploadImage"
+import {UploadImages} from "./UploadImages"
 
 
 interface AddTweetFormProps {
-    classes: ReturnType<typeof useStylesHome>
     maxRows?: number
+    closeModal?: () => void
+}
+
+export interface ImageObj {
+    blobUrl: string
+    file: File
 }
 
 const MAX_LENGTH = 280
 
 export const AddTweetForm: React.FC<AddTweetFormProps> = ({
-                                                              classes,
-                                                              maxRows
+                                                              maxRows,
+                                                              closeModal
                                                           }: AddTweetFormProps): React.ReactElement => {
+    const classes = useStylesHome()
     const dispatch = useDispatch()
     const [text, setText] = useState<string>('')
+    const [images, setImages] = useState<ImageObj[]>([])
     const addFormState = useSelector(selectAddFormState)
 
     const textLimitedPercent = Math.round((text.length / 280) * 100)
@@ -41,9 +46,20 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
         }
     }
 
-    const handleClickAddTweet = (): void => {
-        dispatch(fetchAddTweet(text))
+    const handleClickAddTweet = async (): Promise<void> => {
+        let result = []
+        dispatch(setAddFormState(AddFormState.LOADING))
+        for (let i = 0; i < images.length; i++) {
+            const file = images[i].file
+            const {url} = await uploadImage(file)
+            result.push(url)
+        }
+        dispatch(fetchAddTweet({text, images: result}))
         setText('')
+        setImages([])
+        if (closeModal) {
+            closeModal()
+        }
     }
 
     return (
@@ -62,12 +78,7 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
             </div>
             <div className={classes.addFormBottom}>
                 <div className={classes.addFormBottomActions}>
-                    <IconButton color='primary'>
-                        <ImageOutlinedIcon style={{fontSize: 26}}/>
-                    </IconButton>
-                    <IconButton color='primary'>
-                        <SentimentSatisfiedOutlinedIcon style={{fontSize: 26}}/>
-                    </IconButton>
+                    <UploadImages images={images} onChangeImages={setImages} />
                 </div>
                 <div className={classes.addFormBottomRight}>
                     {text && (
@@ -94,7 +105,7 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
                             color='primary'
                             variant='contained'>
                         {addFormState === AddFormState.LOADING ? (
-                            <CircularProgress color='inherit' size={16} />
+                            <CircularProgress color='inherit' size={16}/>
                         ) : (
                             'Твитнуть'
                         )}

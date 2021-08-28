@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from "react-redux"
 import {BrowserRouter} from "react-router-dom"
-
 import {CssBaseline, ThemeProvider} from "@material-ui/core"
 
 import './index.css'

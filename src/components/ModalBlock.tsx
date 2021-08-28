@@ -6,13 +6,12 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 
-import {useStylesSignIn} from "../pages/SignIn/signInTheme"
+import {useStylesSignIn} from "../pages/themes/signInTheme"
 
 
 interface ModalBlockProps {
     title?: string
     children: React.ReactNode
-    classes?: ReturnType<typeof useStylesSignIn>
     visible?: boolean
     onClose: () => void
 }
@@ -23,6 +22,7 @@ export const ModalBlock: React.FC<ModalBlockProps> = ({
                                                           visible = false,
                                                           children
                                                       }: ModalBlockProps): React.ReactElement | null => {
+    const classes = useStylesSignIn()
     if (!visible) return null
 
     return (

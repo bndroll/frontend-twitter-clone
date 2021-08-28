@@ -9,15 +9,12 @@ import ListItemText from "@material-ui/core/ListItemText"
 import Typography from "@material-ui/core/Typography"
 import Divider from "@material-ui/core/Divider"
 
-import {useStylesHome} from "../pages/Home/homeTheme"
+import {useStylesHome} from "../pages/themes/homeTheme"
 import {selectIsTagsLoaded, selectTagsItems} from "../store/ducks/tags/selectors"
 
 
-interface TagsProps {
-    classes: ReturnType<typeof useStylesHome>
-}
-
-export const Tags: React.FC<TagsProps> = ({classes}: TagsProps): React.ReactElement | null => {
+export const Tags: React.FC = (): React.ReactElement | null => {
+    const classes = useStylesHome()
     const items = useSelector(selectTagsItems)
     const isLoaded = useSelector(selectIsTagsLoaded)
 

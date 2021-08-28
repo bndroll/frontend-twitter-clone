@@ -1,16 +1,26 @@
-import axios from "axios"
-import {TweetsState} from "../../store/ducks/tweets/contracts/state"
+import {axios} from "../../core/axios"
 import {Tweet} from "../../store/ducks/tweet/contracts/state"
 
 
+interface Response<T> {
+    status: string
+    data: T
+}
+
 export const TweetsAPI = {
-    fetchTweets(): Promise<TweetsState['items']> {
-        return axios.get('/tweets?_sort=id&_order=desc').then(({data}) => data)
+    async fetchTweets(userId?: string): Promise<Tweet[]> {
+        const {data} = await axios.get<Response<Tweet[]>>(
+            userId ? `/tweets/user/${userId}` : `/tweets`
+        )
+        return data.data
     },
-    fetchTweetData(id: string): Promise<Tweet[]> {
-        return axios.get(`/tweets?_id=${id}`).then(({data}) => data[0])
+    async fetchTweetData(id: string): Promise<Tweet> {
+        const {data} = await axios.get<Response<Tweet>>(`/tweets/${id}`)
+        return data.data
     },
-    addTweet(payload: Tweet): Promise<Tweet> {
-        return axios.post('/tweets', payload).then(({data}) => data)
-    }
+    async addTweet(payload: { text: string, images: string[] }): Promise<Tweet> {
+        const {data} = await axios.post<Response<Tweet>>('/tweets', payload)
+        return data.data
+    },
+    removeTweet: (id: string): Promise<void> => axios.delete(`/tweets/${id}`)
 }
